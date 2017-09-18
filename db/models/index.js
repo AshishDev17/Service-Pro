@@ -1,4 +1,5 @@
 'use strict';
-const Provider = require('./provider')
+const Provider = require('./provider');
+const Request = require('./request')
 
-module.exports = {Provider}
+module.exports = {Provider, Request}
