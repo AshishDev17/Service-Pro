@@ -1,7 +1,7 @@
 'use strict'
 const providerRouter = require('express').Router();
 const { Provider } = require('../db/models/index');
-const Sequelize = require('sequelize');
+
 
 module.exports = providerRouter;
 

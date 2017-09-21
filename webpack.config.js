@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
@@ -11,12 +11,19 @@ module.exports = {
   context: __dirname,
   devtool: 'source-map',
   resolve: {
+    alias: {
+      'mapbox.js': path.resolve('./node_modules/mapbox.js')
+    },
     extensions: ['', '.js', '.jsx']
   },
   module: {
     loaders: [
       {
-        test: /jsx?$/,
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
+      {
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',
         query: {
@@ -26,3 +33,4 @@ module.exports = {
     ]
   }
 };
+ ///jsx?$/

@@ -1,7 +1,7 @@
 
 'use strict';
-var Sequelize = require('sequelize')
-var db = require('../index.js')
+var Sequelize = require('sequelize');
+var db = require('../index.js');
 
 const Provider = db.define('provider', {
   userName: {

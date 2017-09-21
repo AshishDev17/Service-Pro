@@ -85,7 +85,7 @@ if (module === require.main) {
                   Sequelize.fn('ST_MakePoint',
                     +long, +lat),
                   4326),
-                .2),
+                0.2),
               true)
           });
 
