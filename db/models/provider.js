@@ -7,20 +7,23 @@ const Provider = db.define('provider', {
   userName: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   phoneNumber: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
+  },
+  icon: {
+    type: Sequelize.STRING,
   },
   location: {
     type: Sequelize.GEOMETRY('POINT', 4326),
-    allowNull: false
+    allowNull: false,
   }
 });
 
@@ -37,5 +40,5 @@ Provider.findProviders = (long, lat, range) => {
             4326),
           +range * 0.016),
         true)
-    })
+    });
 };

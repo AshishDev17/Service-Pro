@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 // import { withRouter, NavLink } from 'react-router-dom';
 import MapContainer from './MapContainer';
+import { Container, Header, Divider, Button, Image, Item} from 'semantic-ui-react';
 import socket from '../socket';
 
 export default class ServiceSeeker extends Component {
@@ -11,6 +12,11 @@ export default class ServiceSeeker extends Component {
     this.state ={
       seekerDetails: {},
       providerDetails: {}
+    };
+    this.styles = {
+      container: {
+        padding: `2em`,
+      }
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -23,7 +29,8 @@ export default class ServiceSeeker extends Component {
       location: {
         longitude: -87.618393,
         latitude: 41.862403
-      }
+      },
+      icon: '/images/orange_marker.png',
     };
     //setting the state with fake data
     this.setState({
@@ -43,29 +50,33 @@ export default class ServiceSeeker extends Component {
   }
 
   render () {
+    const styles = this.styles;
     const seeker = this.state.seekerDetails;
     const provider = this.state.providerDetails;
     console.log('seeker', seeker);
     console.log('provider', provider);
 
     return (
-      <div>
+      <Container style={styles.container} textAlign = 'center'>
         {
           seeker.seekerId &&
           <div>
-            <h1>Hello Citizen {seeker.seekerId}</h1>
-            <div>
-              <button onClick={this.handleClick}>Request Service</button>
-            </div>
-            {provider.id &&
-              <h4 id="notification">
-              {'Provider ' + provider.id + ' accepted service request at ' + JSON.stringify(seeker.location)}
-              </h4>
+            <Header as = 'h1'>Hello User {seeker.seekerId}</Header>
+            <Divider hidden />
+            <Button onClick={this.handleClick} color = 'blue' positive >Request Service</Button>
+            <Divider hidden />
+            { provider.id &&
+              <Item>
+                <Item.Image size='tiny' src='' />
+                <Item.Content>
+                  <Item.Description>{'Service provider ' + provider.userName + ' has accepted you service request'}</Item.Description>
+                </Item.Content>
+              </Item>
             }
-            <MapContainer name = { seeker.name} long = { seeker.location.longitude } lat = { seeker.location.latitude  }  />
+            <MapContainer name = { seeker.name} long = { seeker.location.longitude } lat = { seeker.location.latitude  }  icon = {seeker.icon} />
           </div>
         }
-        </div>
+        </Container>
     )
   }
 }

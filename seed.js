@@ -10,6 +10,7 @@ const providers = [
    userName: 'Mechanic 1',
    phoneNumber: '01',
    email: 'mechanic01@gmail.com',
+   icon: '/images/black_marker.png',
    location: {
       type: 'Point',
       coordinates: [-87.631677, 41.808990],
@@ -20,6 +21,7 @@ const providers = [
    userName: 'Mechanic 2',
    phoneNumber: '02',
    email: 'mechanic02@gmail.com',
+   icon: '/images/black_marker.png',
    location: {
       type: 'Point',
       coordinates: [-87.585388, 41.790797],
@@ -30,6 +32,7 @@ const providers = [
    userName: 'Mechanic 3',
    phoneNumber: '03',
    email: 'mechanic03@gmail.com',
+   icon: '/images/black_marker.png',
    location: {
       type: 'Point',
       coordinates: [-87.624352, 41.884238],
@@ -40,6 +43,7 @@ const providers = [
    userName: 'Mechanic 4',
    phoneNumber: '04',
    email: 'mechanic04@gmail.com',
+   icon: '/images/black_marker.png',
    location: {
       type: 'Point',
       coordinates: [-87.632031, 41.885736],
@@ -50,6 +54,7 @@ const providers = [
    userName: 'Mechanic 5',
    phoneNumber: '05',
    email: 'mechanic05@gmail.com',
+   icon: '/images/black_marker.png',
    location: {
       type: 'Point',
       coordinates: [-87.636659, 41.888285],

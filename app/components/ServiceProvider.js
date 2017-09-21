@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, NavLink } from 'react-router-dom';
 import socket from '../socket';
-//import ReactMapboxGl, { Marker, Layer, Feature } from "react-mapbox-gl";
 import axios from 'axios';
 import MapContainer from './MapContainer';
-
-
+import { Container, Header, Divider, Button, Image, Item} from 'semantic-ui-react';
 
 class ServiceProvider extends Component {
   constructor(props){
@@ -67,7 +65,7 @@ class ServiceProvider extends Component {
           <div>
             <button onClick={this.handleClick}>Respond To Service Request</button>
           </div>
-          <MapContainer name = { provider.userName} long = { provider.location.coordinates[0] } lat = { provider.location.coordinates[1]  }  />
+          <MapContainer name = { provider.userName} long = { provider.location.coordinates[0] } lat = { provider.location.coordinates[1]  } icon = { provider.icon} />
         </div>
       }
       </div>

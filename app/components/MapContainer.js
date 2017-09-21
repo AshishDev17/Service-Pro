@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 // import { withRouter} from 'react-router-dom';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.style = {
-      width: '100%',
-      height: '100%'
+      width: '1075px',
+      height: '600px'
     };
 
     // binding this to event-handler functions
@@ -36,7 +35,7 @@ export class MapContainer extends Component {
   }
 
   render() {
-    const {name, long, lat} = this.props;
+    const {name, long, lat, icon} = this.props;
       return (
         <Map
           google={this.props.google}
@@ -45,12 +44,12 @@ export class MapContainer extends Component {
             lat: lat,
             lng: long,
           }}
-          zoom={13}
+          zoom={12}
           onClick={this.onMapClicked}>
           <Marker
             position={{lat: lat, lng: long}}
             onClick={this.onMarkerClick}
-            name={'Current location'} />
+            name={'Current location'} icon = { icon } />
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}>
