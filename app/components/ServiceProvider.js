@@ -12,8 +12,12 @@ class ServiceProvider extends Component {
     this.state = {
       providerDetails: {},
       seekerDetails: {},
-    }
-
+    };
+    this.styles = {
+      container: {
+        padding: `2em`,
+      }
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -42,33 +46,39 @@ class ServiceProvider extends Component {
   }
 
   render () {
+    const styles = this.styles;
     const provider = this.state.providerDetails;
     const seeker = this.state.seekerDetails;
     console.log(provider);
     console.log(seeker);
 
     return (
-      <div>
+      <Container style={styles.container} textAlign = 'center'>
         {
           provider.id &&
           <div>
-          <h1>Hello {provider.userName}</h1>
-          <div>
-            {JSON.stringify(provider)}
-          </div>
-          {
-            seeker.seekerId &&
-            <h4 id="notification">
-            {'Seeker ' + seeker.seekerId + ' requested service at ' + JSON.stringify(seeker.location)}
-            </h4>
-          }
-          <div>
-            <button onClick={this.handleClick}>Respond To Service Request</button>
-          </div>
-          <MapContainer name = { provider.userName} long = { provider.location.coordinates[0] } lat = { provider.location.coordinates[1]  } icon = { provider.icon} />
+            <Header as = 'h1'>Hello Provider {provider.userName}</Header>
+            <Divider hidden />
+            {
+              seeker.seekerId &&
+              <div>
+                <Item>
+                  <Item.Image size='tiny' src='' />
+                  <Item.Content>
+                    <Item.Description>
+                    {'User ' + seeker.name + ' has requested a service'}
+                    </Item.Description>
+                  </Item.Content>
+                </Item>
+                <Divider hidden />
+                <Button onClick={this.handleClick}> Respond To Service Request</Button>
+                <Divider hidden />
+              </div>
+            }
+            <MapContainer name = { provider.userName} long = { provider.location.coordinates[0] } lat = { provider.location.coordinates[1]  } icon = { provider.icon} />
         </div>
       }
-      </div>
+      </Container>
     )
   }
 }

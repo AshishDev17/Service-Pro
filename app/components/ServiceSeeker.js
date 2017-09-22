@@ -17,7 +17,7 @@ export default class ServiceSeeker extends Component {
       container: {
         padding: `2em`,
       }
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -66,12 +66,15 @@ export default class ServiceSeeker extends Component {
             <Button onClick={this.handleClick} color = 'blue' positive >Request Service</Button>
             <Divider hidden />
             { provider.id &&
-              <Item>
-                <Item.Image size='tiny' src='' />
-                <Item.Content>
-                  <Item.Description>{'Service provider ' + provider.userName + ' has accepted you service request'}</Item.Description>
-                </Item.Content>
+              <div>
+                <Item>
+                  <Item.Image size='tiny' src='' />
+                  <Item.Content>
+                    <Item.Description>{'Service provider ' + provider.userName + ' has accepted you service request'}</Item.Description>
+                  </Item.Content>
               </Item>
+              <Divider hidden />
+              </div>
             }
             <MapContainer name = { seeker.name} long = { seeker.location.longitude } lat = { seeker.location.latitude  }  icon = {seeker.icon} />
           </div>
