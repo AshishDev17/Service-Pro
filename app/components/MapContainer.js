@@ -9,7 +9,7 @@ export class MapContainer extends Component {
     this.state = {};
     this.style = {
       width: '1075px',
-      height: '600px'
+      height: '500px'
     };
 
     // binding this to event-handler functions
@@ -44,7 +44,7 @@ export class MapContainer extends Component {
             lat: lat,
             lng: long,
           }}
-          zoom={12}
+          zoom={11}
           onClick={this.onMapClicked}>
           <Marker
             position={{lat: lat, lng: long}}

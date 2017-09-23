@@ -1,23 +1,58 @@
 'use strict';
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react';
+import { logout } from '../store';
 
-export default class Navbar extends Component{
+class Navbar extends Component{
+   constructor(props) {
+    super(props);
+    this.state = {};
+    this.styles = {
+      navbar: {
+        height: `3.8em`,
+      },
+      title: {
+        fontSize: '1.2em',
+        fontFamily: 'Oleo Script',
+      },
+      rightMenu: {
+        width: '145px',
+      },
+    };
+  }
+
   render() {
+    const { isLoggedIn, handleLogout } = this.props;
     return (
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          {/*<div className="navbar-header">
-            <NavLink className="navbar-brand" to="/">Home</NavLink>
-          </div>*/}
-          <div  id="bs-example-navbar-collapse-1">
-            <ul className="nav navbar-nav">
-              <li><NavLink to="/providers">Service Provider</NavLink></li>
-              <li><NavLink to="/seekers">Service Seeker</NavLink></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    )
+      <Menu floated fixed="top" stackable style={this.styles.navbar}>
+        {isLoggedIn ? (
+          <Menu.Menu>
+            <Menu.Item position="right" name={`Logout`} onClick={handleLogout} />
+          </Menu.Menu>
+        ) : (
+          <Menu.Menu >
+            <Menu.Item position="right" name="Login" as={Link} to={`/login`} />
+            <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
+          </Menu.Menu>
+        )}
+      </Menu>
+    );
   }
 }
+
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.user.id,
+  };
+};
+
+const mapDispatch = (dispatch) => ({
+  handleLogout: (evt) => {
+    evt.preventDefault();
+    dispatch(logout());
+  },
+});
+
+export default withRouter(connect(mapState, mapDispatch)(Navbar));

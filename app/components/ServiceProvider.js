@@ -15,7 +15,7 @@ class ServiceProvider extends Component {
     };
     this.styles = {
       container: {
-        padding: `2em`,
+        padding: `5em`,
       }
     };
     this.handleClick = this.handleClick.bind(this);
@@ -57,7 +57,7 @@ class ServiceProvider extends Component {
         {
           provider.id &&
           <div>
-            <Header as = 'h1'>Hello Provider {provider.userName}</Header>
+            <Header as = 'h1'>Hello Provider {provider.name}</Header>
             <Divider hidden />
             {
               seeker.seekerId &&
@@ -75,7 +75,7 @@ class ServiceProvider extends Component {
                 <Divider hidden />
               </div>
             }
-            <MapContainer name = { provider.userName} long = { provider.location.coordinates[0] } lat = { provider.location.coordinates[1]  } icon = { provider.icon} />
+            <MapContainer name = { provider.name} long = { provider.location.coordinates[0] } lat = { provider.location.coordinates[1]  } icon = { provider.icon} />
         </div>
       }
       </Container>

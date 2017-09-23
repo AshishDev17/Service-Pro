@@ -1,13 +1,25 @@
 'use strict'
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const { resolve } = require('path')
-const { Provider, Request } = require('../db/models/index')
-const Sequelize = require('sequelize')
-const pkg = require('../package.json')
-const app = express()
-const Promise = require('bluebird')
+const express = require('express');
+const bodyParser = require('body-parser');
+const { resolve } = require('path');
+const { Provider, Request } = require('../db/models/index');
+const Sequelize = require('sequelize');
+const pkg = require('../package.json');
+const app = express();
+const Promise = require('bluebird');
+const db = require('../db/index');
+const session = require('express-session');
+const passport = require('passport');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const sessionStore = new SequelizeStore({db});
+
+// passport registration
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser((id, done) =>
+  db.models.user.findById(id)
+    .then(user => done(null, user))
+    .catch(done));
 
 if (process.env.NODE_ENV !== 'production') {
   // Logging middleware (non-production only)
@@ -18,9 +30,21 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
+  .use(session({
+    secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+  }))
+  .use(passport.initialize())
+  .use(passport.session())
+  .use('/auth', require('./auth')) //Authenticate api
+  .use('/api', require('./api')) // Serve our api
   .use(express.static(resolve(__dirname, '..', 'public'))) // Serve static files from ../public
   .use(express.static(resolve(__dirname, '..', 'node_modules'))) // Serve static files from ../node_modules
-  .use('/api', require('./api')) // Serve our api
+  .use((err, req, res, next) => {   //error handling middleware
+  console.log(err.stack);
+  res.status(err.status || 500).send(err.message || 'Internal Error!')})
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html'))) // Send index.html for any other requests.
 
 // notice the use of `_` as the first parameter above. This is a pattern for parameters that must exist, but you don't use or reference (or need) in the function body that follows.
@@ -85,7 +109,7 @@ if (module === require.main) {
                   Sequelize.fn('ST_MakePoint',
                     +long, +lat),
                   4326),
-                0.2),
+                0.5),
               true)
           });
 

@@ -7,7 +7,7 @@ const chalk = require('chalk');
 
 const providers = [
   {
-   userName: 'Mechanic 1',
+   name: 'Mechanic 1',
    phoneNumber: '01',
    email: 'mechanic01@gmail.com',
    icon: '/images/black_marker.png',
@@ -18,7 +18,7 @@ const providers = [
     }
   },
   {
-   userName: 'Mechanic 2',
+   name: 'Mechanic 2',
    phoneNumber: '02',
    email: 'mechanic02@gmail.com',
    icon: '/images/black_marker.png',
@@ -29,7 +29,7 @@ const providers = [
     }
   },
   {
-   userName: 'Mechanic 3',
+   name: 'Mechanic 3',
    phoneNumber: '03',
    email: 'mechanic03@gmail.com',
    icon: '/images/black_marker.png',
@@ -40,7 +40,7 @@ const providers = [
     }
   },
   {
-   userName: 'Mechanic 4',
+   name: 'Mechanic 4',
    phoneNumber: '04',
    email: 'mechanic04@gmail.com',
    icon: '/images/black_marker.png',
@@ -51,7 +51,7 @@ const providers = [
     }
   },
   {
-   userName: 'Mechanic 5',
+   name: 'Mechanic 5',
    phoneNumber: '05',
    email: 'mechanic05@gmail.com',
    icon: '/images/black_marker.png',

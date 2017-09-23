@@ -1,10 +1,13 @@
-'use strict'
+'use strict';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import store from '../store';
 import Navbar from './Navbar';
 import ServiceProvider from './ServiceProvider';
 import ServiceSeeker from './ServiceSeeker';
+import {Login, Signup } from './UserAuthForm';
+import User from './User';
+import Home from './Home';
+import Footer from './Footer';
 
 export default class Root extends Component {
 
@@ -12,15 +15,18 @@ export default class Root extends Component {
     return (
       <Router>
         <div>
-          {/*<div>
-            <Navbar />
-          </div>*/}
-          <div className="container-fluid">
+          <Navbar />
+          <div>
             <Switch>
-              <Route path="/providers/:providerId" component={ServiceProvider} />
-              <Route path="/seekers/:seekerId" component={ServiceSeeker} />
+              <Route exact path="/" component={Home} />
+              <Route exact path="/user" component={User} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route path="/provider/:providerId" component={ServiceProvider} />
+              <Route path="/seeker/:seekerId" component={ServiceSeeker} />
             </Switch>
           </div>
+          <Footer />
         </div>
       </Router>
     )

@@ -1,9 +1,8 @@
-
 'use strict';
 var Sequelize = require('sequelize');
 var db = require('../index.js');
 
-const Provider = db.define('provider', {
+const Seeker = db.define('seeker', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -27,18 +26,4 @@ const Provider = db.define('provider', {
   }
 });
 
-module.exports = Provider;
-
-Provider.findProviders = (long, lat, range) => {
-  return Provider.findAll({
-      where: Sequelize.where(
-        Sequelize.fn('ST_DWithin',
-          Sequelize.col('location'),
-          Sequelize.fn('ST_SetSRID',
-            Sequelize.fn('ST_MakePoint',
-              long, lat),
-            4326),
-          +range * 0.016),
-        true)
-    });
-};
+module.exports = Seeker;
