@@ -11,9 +11,10 @@ const providers = [
    phoneNumber: '01',
    email: 'mechanic01@gmail.com',
    icon: '/images/black_marker.png',
+   userType: 'Provider',
    location: {
       type: 'Point',
-      coordinates: [-87.631677, 41.808990],
+      coordinates: [-87.9806265, 42.0883603],
       crs: { type: 'name', properties: { name: 'EPSG:4326'} }
     }
   },
@@ -22,9 +23,10 @@ const providers = [
    phoneNumber: '02',
    email: 'mechanic02@gmail.com',
    icon: '/images/black_marker.png',
+   userType: 'Provider',
    location: {
       type: 'Point',
-      coordinates: [-87.585388, 41.790797],
+      coordinates: [-87.6876969, 42.0450722],
       crs: { type: 'name', properties: { name: 'EPSG:4326'} }
     }
   },
@@ -33,9 +35,10 @@ const providers = [
    phoneNumber: '03',
    email: 'mechanic03@gmail.com',
    icon: '/images/black_marker.png',
+   userType: 'Provider',
    location: {
       type: 'Point',
-      coordinates: [-87.624352, 41.884238],
+      coordinates: [-88.0834059, 42.0333607],
       crs: { type: 'name', properties: { name: 'EPSG:4326'} }
     }
   },
@@ -44,9 +47,10 @@ const providers = [
    phoneNumber: '04',
    email: 'mechanic04@gmail.com',
    icon: '/images/black_marker.png',
+   userType: 'Provider',
    location: {
       type: 'Point',
-      coordinates: [-87.632031, 41.885736],
+      coordinates: [-87.67513043, 41.9214378],
       crs: { type: 'name', properties: { name: 'EPSG:4326'} }
     }
   },
@@ -55,9 +59,70 @@ const providers = [
    phoneNumber: '05',
    email: 'mechanic05@gmail.com',
    icon: '/images/black_marker.png',
+   userType: 'Provider',
    location: {
       type: 'Point',
-      coordinates: [-87.636659, 41.888285],
+      coordinates: [-87.6238803, 41.8708586],
+      crs: { type: 'name', properties: { name: 'EPSG:4326'} }
+    }
+  },
+  {
+   name: 'Mechanic 6',
+   phoneNumber: '06',
+   email: 'mechanic06@gmail.com',
+   icon: '/images/black_marker.png',
+   userType: 'Provider',
+   location: {
+      type: 'Point',
+      coordinates: [-88.1535352, 41.7508391],
+      crs: { type: 'name', properties: { name: 'EPSG:4326'} }
+    }
+  },
+  {
+   name: 'Mechanic 7',
+   phoneNumber: '07',
+   email: 'mechanic07@gmail.com',
+   icon: '/images/black_marker.png',
+   userType: 'Provider',
+   location: {
+      type: 'Point',
+      coordinates: [-87.8833991, 42.0333623],
+      crs: { type: 'name', properties: { name: 'EPSG:4326'} }
+    }
+  },
+  {
+   name: 'Mechanic 8',
+   phoneNumber: '08',
+   email: 'mechanic08@gmail.com',
+   icon: '/images/black_marker.png',
+   userType: 'Provider',
+   location: {
+      type: 'Point',
+      coordinates: [-87.8289548, 42.1275267],
+      crs: { type: 'name', properties: { name: 'EPSG:4326'} }
+    }
+  },
+  {
+   name: 'Mechanic 9',
+   phoneNumber: '09',
+   email: 'mechanic09@gmail.com',
+   icon: '/images/black_marker.png',
+   userType: 'Provider',
+   location: {
+      type: 'Point',
+      coordinates: [-87.7539448, 41.8455877],
+      crs: { type: 'name', properties: { name: 'EPSG:4326'} }
+    }
+  },
+  {
+   name: 'Mechanic 10',
+   phoneNumber: '10',
+   email: 'mechanic10@gmail.com',
+   icon: '/images/black_marker.png',
+   userType: 'Provider',
+   location: {
+      type: 'Point',
+      coordinates: [-87.9403418, 41.8994744],
       crs: { type: 'name', properties: { name: 'EPSG:4326'} }
     }
   }

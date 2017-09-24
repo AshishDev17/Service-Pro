@@ -23,7 +23,6 @@ class UserAuthForm extends Component {
 
   render() {
   const {name, displayName, handleSubmit, error} = this.props;
-  console.log('name ', name, ' displayName ', displayName);
   return (
     <Container style={this.style} fluid>
       <Card centered raised>
@@ -81,7 +80,6 @@ const mapDispatch = (dispatch) => {
       evt.preventDefault();
 
       const formName = evt.target.name;
-      console.log('form name', formName);
 
       let user = {};
       if (formName === 'login'){
@@ -92,11 +90,6 @@ const mapDispatch = (dispatch) => {
         };
       }
       else if (formName === 'signup'){
-        console.log('name', evt.target.userName.value);
-        console.log('email', evt.target.email.value);
-        console.log('password', evt.target.password.value);
-        console.log('phoneNumber', evt.target.phoneNumber.value);
-        console.log('evt.userType', evt.target.userType.value);
         user = {
           name: evt.target.userName.value,
           email: evt.target.email.value,
@@ -113,19 +106,3 @@ const mapDispatch = (dispatch) => {
 
 export const Login = withRouter(connect(mapLogin, mapDispatch)(UserAuthForm));
 export const Signup = withRouter(connect(mapSignup, mapDispatch)(UserAuthForm));
-
-{/*
-  ? <Form onSubmit={handleSubmit} name={name}>
-            <Form.Input label="Email" name="email" type="email" />
-            <Form.Input label="Password" name="password" type="password" />
-            <Form.Select label="User Type" name = "userType" options={this.options} />
-            <Form.Button fluid>Submit</Form.Button>
-            </Form>
-            : <Form onSubmit={handleSubmit} name={name}>
-            <Form.Input label="Email" name="email" type="email" />
-            <Form.Input label="Password" name="password" type="password" />
-            <Form.Input label="Phone Number" name="phoneNumber" />
-            <Form.Select label="User Type" name="userType" options={this.options} onChange={this.handleChange} value={this.state.value} />
-            <Form.Button fluid>Submit</Form.Button>
-            </Form>
-*/}

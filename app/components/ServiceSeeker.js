@@ -13,8 +13,8 @@ class Seeker extends Component {
     super(props);
     this.state ={
       seekerDetails: {},
-      providerDetails: {},
-      location: {},
+      provider: {},
+      serviceProviders: [],
     };
     this.styles = {
       message: {
@@ -43,16 +43,21 @@ class Seeker extends Component {
     // });
     const seekerId = this.props.seeker.id;
     socket.emit('join', {seekerId: seekerId});
+    socket.on('service-request', (providers) => {
+      this.setState({
+        serviceProviders: providers
+      });
+    });
     socket.on('request-accepted', (providerDetails) => {
       this.setState({
-        providerDetails: providerDetails
+        provider: providerDetails
       });
-    })
+    });
   }
 
   handleRequest (e, seeker) {
     this.setState({
-        seekerDetails: seeker
+        seekerDetails: seeker,
       });
     socket.emit('service-request', seeker);
   }
@@ -60,9 +65,25 @@ class Seeker extends Component {
   render () {
     const styles = this.styles;
     const {seeker} = this.props;
-    const provider = this.state.providerDetails;
-    console.log('seeker', seeker);
-    console.log('provider', provider);
+    const {provider, seekerDetails, serviceProviders} = this.state;
+
+    const locationMarkers = [];
+    if ( serviceProviders.length > 0){
+      serviceProviders.forEach(prvdr => {
+        locationMarkers.push({
+          name: prvdr.name,
+          icon: prvdr.icon,
+          coordinates: prvdr.location.coordinates,
+        });
+      });
+      locationMarkers.push({
+        name: seekerDetails.name,
+        icon: seekerDetails.icon,
+        coordinates: seekerDetails.location.coordinates,
+      });
+    }
+
+    console.log('markers', locationMarkers);
 
     return (
       <div>
@@ -83,7 +104,7 @@ class Seeker extends Component {
                     <p>Latutude: {this.props.coords.latitude} & Longitude: {this.props.coords.longitude}</p>
                   </Message>
                   <Divider hidden />
-                  <Button onClick={(e) => this.handleRequest(e, Object.assign({}, seeker, {latitude: this.props.coords.latitude, longitude: this.props.coords.longitude }))} color = 'blue' positive >Request Service</Button>
+                  <Button onClick={(e) => this.handleRequest(e, Object.assign({}, seeker, {location: { coordinates: [this.props.coords.longitude, this.props.coords.latitude]}}))} color = 'blue' positive >Request Service</Button>
                   <Divider hidden />
                   { provider.id &&
                     <div>
@@ -96,7 +117,7 @@ class Seeker extends Component {
                     <Divider hidden />
                     </div>
                   }
-                  <MapContainer name = { seeker.name} long = { this.props.coords.longitude } lat = { this.props.coords.latitude  }  icon = {seeker.icon} />
+                  <MapContainer markers = { locationMarkers } lat={this.props.coords.latitude} long={this.props.coords.longitude} icon={seeker.icon}/>
                 </div>
                 : <div>Getting the location data&hellip; </div>
               }
@@ -125,3 +146,7 @@ const mapDispatch = (dispatch) => {
 };
 
 export default withRouter(connect(null, null)(ServiceSeeker));
+
+{/*
+  <MapContainer name = { seeker.name} long = { this.props.coords.longitude } lat = { this.props.coords.latitude  }  icon = {seeker.icon} />
+*/}

@@ -89,10 +89,10 @@ if (module === require.main) {
 
     // socket listening on 'service-request' event
     socket.on('service-request', (seekerDetails) => {
-      const seekerId = seekerDetails.seekerId;
+      const seekerId = seekerDetails.id;
       const status = 'Waiting';
-      const long = seekerDetails.location.longitude;
-      const lat = seekerDetails.location.latitude;
+      const long = seekerDetails.location.coordinates[0];
+      const lat = seekerDetails.location.coordinates[1];
       const location = [long, lat];
 
       Request.create({
@@ -109,7 +109,7 @@ if (module === require.main) {
                   Sequelize.fn('ST_MakePoint',
                     +long, +lat),
                   4326),
-                0.5),
+                0.7),
               true)
           });
 
@@ -117,11 +117,10 @@ if (module === require.main) {
         })
         .spread((providers, request) => {
           seekerDetails.requestId = request.id;
-          console.log(seekerDetails);
           providers.forEach(provider => {
             io.sockets.in(provider.id).emit('service-request', seekerDetails);
           });
-
+          io.sockets.in(seekerId).emit('service-request', providers);
           return null;
         })
         .catch(err => console.error(err));

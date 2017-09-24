@@ -21,6 +21,9 @@ const Provider = db.define('provider', {
   icon: {
     type: Sequelize.STRING,
   },
+  userType: {
+    type: Sequelize.STRING,
+  },
   location: {
     type: Sequelize.GEOMETRY('POINT', 4326),
     allowNull: false,

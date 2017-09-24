@@ -19,23 +19,27 @@ export class MapContainer extends Component {
 
   onMarkerClick(props, marker, e) {
     this.setState({
+      name: marker.label,
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
+    console.log('marker clicked', marker);
   }
 
   onMapClicked(props) {
     if (this.state.showingInfoWindow) {
       this.setState({
+        name: '',
         showingInfoWindow: false,
         activeMarker: null
-      })
+      });
     }
   }
 
   render() {
-    const {name, long, lat, icon} = this.props;
+    //const {name, long, lat, icon} = this.props;
+    const {markers, long, lat, icon} = this.props;
       return (
         <Map
           google={this.props.google}
@@ -46,16 +50,24 @@ export class MapContainer extends Component {
           }}
           zoom={11}
           onClick={this.onMapClicked}>
-          <Marker
-            position={{lat: lat, lng: long}}
+          {
+            markers.length > 0
+            ?markers.map((marker, index) => {
+              return <Marker key={index} label={marker.name}
+            position={{lat: marker.coordinates[1], lng: marker.coordinates[0]}}
             onClick={this.onMarkerClick}
-            name={'Current location'} icon = { icon } />
+            icon = { marker.icon } />
+          })
+          :<Marker position={{lat: lat, lng: long}}
+            onClick={this.onMarkerClick}
+            icon = { icon } />
+          }
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}>
-              <div>
-                <h1>{name}</h1>
-              </div>
+            <div>
+              <h2>{this.state.name}</h2>
+            </div>
           </InfoWindow>
         </Map>
       );
@@ -65,3 +77,10 @@ export class MapContainer extends Component {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBlX2BNCqWGltLM-vDuyHA_NNnWNgjcp10'
 })(MapContainer);
+
+{/*
+  <InfoWindow
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}>
+          </InfoWindow>
+*/}

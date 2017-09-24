@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const debug = require('debug')('sql');
 const chalk = require('chalk');
 const Sequelize = require('sequelize');
@@ -16,7 +16,7 @@ const db = module.exports = new Sequelize(connectionString, {
 });
 
 // run our models file (makes all associations for our Sequelize objects)
-require('./models')
+require('./models');
 
 // sync the db, creating it if necessary
 function sync(force=false, retries=0, maxRetries=5) {
