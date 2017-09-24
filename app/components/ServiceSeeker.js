@@ -26,23 +26,7 @@ class Seeker extends Component {
   }
 
   componentDidMount(){
-
-    // const seekerId = this.props.match.params.seekerId;
-    // const seekerDetails = {
-    //   seekerId: seekerId,
-    //   name: 'Seeker 1',
-    //   // location: {
-    //   //   longitude: this.props.coords.latitude,
-    //   //   latitude: this.props.coords.longitude,
-    //   // },
-    //   icon: '/images/orange_marker.png',
-    // };
-    // //setting the state with fake data
-    // this.setState({
-    //   seekerDetails: seekerDetails
-    // });
-    const seekerId = this.props.seeker.id;
-    socket.emit('join', {seekerId: seekerId});
+    socket.emit('join', this.props.seeker);
     socket.on('service-request', (providers) => {
       this.setState({
         serviceProviders: providers
@@ -104,8 +88,14 @@ class Seeker extends Component {
                     <p>Latutude: {this.props.coords.latitude} & Longitude: {this.props.coords.longitude}</p>
                   </Message>
                   <Divider hidden />
-                  <Button onClick={(e) => this.handleRequest(e, Object.assign({}, seeker, {location: { coordinates: [this.props.coords.longitude, this.props.coords.latitude]}}))} color = 'blue' positive >Request Service</Button>
-                  <Divider hidden />
+                  {
+                    !provider.id
+                    &&
+                    <div>
+                      <Button onClick={(e) => this.handleRequest(e, Object.assign({}, seeker, {location: { coordinates: [this.props.coords.longitude, this.props.coords.latitude]}}))} color = 'blue' positive >Request Service</Button>
+                      <Divider hidden />
+                    </div>
+                  }
                   { provider.id &&
                     <div>
                       <Item>

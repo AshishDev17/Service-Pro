@@ -13,8 +13,11 @@ const Request = db.define('request', {
     type: Sequelize.STRING,
     defaultValue: 'Waiting'
   },
-  location:{
-    type: Sequelize.ARRAY(Sequelize.STRING)
+  seekerRequestedLocation: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+  providerAcceptedLocation: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
   }
 });
 

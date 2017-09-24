@@ -7,7 +7,6 @@ const Provider = db.define('provider', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true,
   },
   phoneNumber: {
     type: Sequelize.STRING,

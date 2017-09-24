@@ -77,28 +77,62 @@ if (module === require.main) {
 
     // socket listening on 'join' event
     socket.on('join', data => {
-      if (data.seekerId) {
-        socket.join(data.seekerId); //seeker joins a unique room/channel that's named after the userId
-        console.log("Seeker joined room: " + data.seekerId);
+      // if (data.seekerId) {
+      //   socket.join(data.seekerId); //seeker joins a unique room/channel that's named after the userId
+      //   console.log("Seeker joined room: " + data.seekerId);
+      // }
+      // else if (data.providerId) {
+      //   socket.join(data.providerId); //provider joins a unique room/channel that's named after the userId
+      //   Provider.
+      //   console.log("Provider joined room: " + data.providerId);
+      // }
+
+      if (data.userType === 'Seeker') {
+        socket.join(data.email); //seeker joins a unique room/channel that's named after the userId
+        console.log("Seeker joined room: " + data.email);
       }
-      else if (data.providerId) {
-        socket.join(data.providerId); //provider joins a unique room/channel that's named after the userId
-        console.log("Provider joined room: " + data.providerId);
+      else if (data.userType === 'Provider') {
+        socket.join(data.email); //provider joins a unique room/channel that's named after the userId
+        console.log("Provider joined room: " + data.email);
+        Provider.findOne({
+          where: {
+            email: data.email,
+          }
+        })
+        .then(provider => {
+          if (!provider){
+            return Provider.create({
+              name: data.name,
+              phoneNumber: data.phoneNumber,
+              email: data.email,
+              icon: data.icon,
+              userType: data.userType,
+              location: data.location
+            });
+          }
+          else {
+            return provider.update({
+              location: data.location
+            });
+          }
+        })
+        .catch(error => console.error(error));
       }
     });
 
     // socket listening on 'service-request' event
     socket.on('service-request', (seekerDetails) => {
       const seekerId = seekerDetails.id;
+      const seekerEmail = seekerDetails.email;
       const status = 'Waiting';
       const long = seekerDetails.location.coordinates[0];
       const lat = seekerDetails.location.coordinates[1];
-      const location = [long, lat];
+      const seekerLocation = [long, lat];
 
       Request.create({
         seekerId: seekerId,
         status: status,
-        location: location
+        seekerRequestedLocation: seekerLocation
       })
         .then((request) => {
           const findProvider = Provider.findAll({
@@ -118,9 +152,9 @@ if (module === require.main) {
         .spread((providers, request) => {
           seekerDetails.requestId = request.id;
           providers.forEach(provider => {
-            io.sockets.in(provider.id).emit('service-request', seekerDetails);
+            io.sockets.in(provider.email).emit('service-request', seekerDetails);
           });
-          io.sockets.in(seekerId).emit('service-request', providers);
+          io.sockets.in(seekerEmail).emit('service-request', providers);
           return null;
         })
         .catch(err => console.error(err));
@@ -129,24 +163,23 @@ if (module === require.main) {
     // socket listening on 'request-accepted' event
     socket.on('request-accepted', (data) => {
       const requestId = data.seekerDetails.requestId;
-      const seekerId = data.seekerDetails.seekerId;
+      const seekerEmail = data.seekerDetails.email;
       const providerId = data.providerDetails.id;
       const status = 'Engaged';
-      const long = data.seekerDetails.location.longitude;
-      const lat = data.seekerDetails.location.latitude;
-      const location = [long, lat];
+      const long = data.providerDetails.location.coordinates[0];
+      const lat = data.seekerDetails.location.coordinates[1];
+      const providerLocation = [long, lat];
 
       Request.findById(requestId)
         .then(request => {
           return request.update({
-            seekerId: seekerId,
             providerId: providerId,
             status: status,
-            location: location
+            providerAcceptedLocation:  providerLocation
           });
         })
         .then(() => {
-          io.sockets.in(seekerId).emit('request-accepted', data.providerDetails);
+          io.sockets.in(seekerEmail).emit('request-accepted', data.providerDetails);
 
           return null;
         })
