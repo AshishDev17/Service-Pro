@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import ServiceProvider from './ServiceProvider';
 import ServiceSeeker from './ServiceSeeker';
 import { Container} from 'semantic-ui-react';
+import { me } from '../store';
 
 
 class User extends Component {
@@ -21,16 +22,23 @@ class User extends Component {
     //this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    this.props.loadUser();
+  }
+
   render () {
     const styles = this.styles;
     const {user} = this.props;
+    console.log('user', user);
 
     return (
       <Container style={styles.container} textAlign = 'center'>
         {
-          user.type === 'Seeker'
-          ? <ServiceSeeker user={user} />
-          : <ServiceProvider user={user} />
+          user.userType === 'Seeker' &&
+          <ServiceSeeker seeker={user} />
+        }
+        {
+          user.userType === 'Provider' && <ServiceProvider provider={user} />
         }
       </Container>
     );
@@ -43,6 +51,12 @@ const mapState = (state) => {
   };
 };
 
-//const mapDispatch = (dispatch) => {};
+const mapDispatch = (dispatch) => {
+  return {
+      loadUser() {
+      dispatch(me());
+    }
+  };
+};
 
-export default withRouter(connect(mapState, null)(User));
+export default withRouter(connect(mapState, mapDispatch)(User));

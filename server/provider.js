@@ -30,10 +30,19 @@ providerRouter.get('/', (req, res, next) => {
 
 //Get '/:providerId' => get provider by id
 providerRouter.get('/:providerId', (req, res, next) => {
-  Provider.findById(req.params.providerId)
+  Provider.findOne({
+    where: {id: req.params.providerId},
+    attribute: ['id', 'name', 'email', 'icon', 'userType', 'phoneNumber'],
+  })
     .then(provider => res.status(200).json(provider))
     .catch(next);
-})
+});
+
+// providerRouter.get('/:providerId', (req, res, next) => {
+//   Provider.findById(req.params.providerId)
+//     .then(provider => res.status(200).json(provider))
+//     .catch(next);
+// });
 
 // POST '/' => create a new provider
 // providerRouter.post('/', (req, res, next) => {

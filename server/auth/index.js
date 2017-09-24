@@ -11,8 +11,19 @@ router.post('/login', (req, res, next) => {
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password');
       } else {
-        req.login(user, (err) => (err ? next(err) : res.json(user)));
+        return user;
       }
+    })
+    .then(user => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      icon: user.icon,
+      userType: user.userType,
+      phoneNumber: user.phoneNumber,
+    }))
+    .then((user) => {
+      req.login(user, (err) => (err ? next(err) : res.json(user)));
     })
     .catch(next);
 });
@@ -21,6 +32,14 @@ router.post('/login', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
   console.log('req body', req.body);
   User.create(req.body)
+    .then(user => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      icon: user.icon,
+      userType: user.userType,
+      phoneNumber: user.phoneNumber,
+    }))
     .then((user) => {
       req.login(user, (err) => (err ? next(err) : res.json(user)));
     })

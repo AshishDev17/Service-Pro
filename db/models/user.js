@@ -25,7 +25,11 @@ const User = db.define('user', {
   },
   icon: {
     type: Sequelize.STRING,
-    defaultValue: '/images/blue_marker.png',
+    get() {
+      const type = this.getDataValue('userType');
+      if (type === 'Seeker') return '/images/blue_marker.png';
+      else return '/images/black_marker.png';
+    }
   },
   // isAdmin: {
   //   type: Sequelize.BOOLEAN,

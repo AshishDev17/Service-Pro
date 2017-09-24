@@ -35,17 +35,13 @@ class Footer extends Component{
   }
 }
 
-const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.user.id,
-  };
-};
+// const mapState = (state) => {};
 
-const mapDispatch = (dispatch) => ({
-  handleLogout: (evt) => {
-    evt.preventDefault();
-    //dispatch(logout());
-  },
-});
+// const mapDispatch = (dispatch) => ({
+//   handleLogout: (evt) => {
+//     evt.preventDefault();
+//     //dispatch(logout());
+//   },
+// });
 
-export default withRouter(connect(mapState, mapDispatch)(Footer));
+export default withRouter(connect(null, null)(Footer));

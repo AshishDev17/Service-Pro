@@ -23,7 +23,7 @@ class ServiceProvider extends Component {
 
   componentDidMount(){
     const providerId = this.props.match.params.providerId;
-    axios.get(`/api/providers/${providerId}`)
+    axios.get(`/api/provider/${providerId}`)
       .then(res => res.data)
       .then(provider => {
         this.setState({
