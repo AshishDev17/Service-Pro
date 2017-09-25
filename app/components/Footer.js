@@ -26,7 +26,7 @@ class Footer extends Component{
   render() {
     return (
       <Menu floated fixed="bottom" style={this.styles.navbar}>
-        <Menu.Menu style={this.styles.rightMenu} position = "right">
+        <Menu.Menu style={this.styles.rightMenu}>
           <Menu.Item name="About Us" as={Link} to={`/`} />
           <Menu.Item name="Contact Us" as={Link} to={`/`} />
         </Menu.Menu>

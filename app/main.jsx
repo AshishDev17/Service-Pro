@@ -12,3 +12,9 @@ render(
   </Provider>,
   document.getElementById('main')
 );
+
+{/*
+<Provider store={store}>
+    <Root />
+  </Provider>
+*/}

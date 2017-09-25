@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import MapContainer from './MapContainer';
 import {geolocated, geoPropTypes} from 'react-geolocated';
-import { Container, Header, Divider, Button, Image, Message, Item} from 'semantic-ui-react';
+import { Header, Divider, Button, Message} from 'semantic-ui-react';
 import socket from '../socket';
 
 
@@ -74,8 +74,6 @@ class Seeker extends Component {
       });
     }
 
-    console.log('markers', locationMarkers);
-
     return (
       <div>
         {
@@ -105,12 +103,14 @@ class Seeker extends Component {
                   }
                   { provider.id &&
                     <div>
-                      <Item>
-                        <Item.Image size='tiny' src='' />
-                        <Item.Content>
-                          <Item.Description>{'Service provider ' + provider.name + ' has accepted your service request'}</Item.Description>
-                        </Item.Content>
-                    </Item>
+                      <Message positive style = {styles.message}>
+                        <Message.Header>
+                          Service Request Status
+                        </Message.Header>
+                        <p>
+                          {'Service provider ' + provider.name + ' has accepted your service request'}
+                        </p>
+                      </Message>
                     <Divider hidden />
                     </div>
                   }
@@ -134,16 +134,13 @@ const ServiceSeeker = geolocated({
   userDecisionTimeout: 5000,
 })(Seeker);
 
-const mapState = (state) => {
-  return {};
-};
+// const mapState = (state) => {
+//   return {};
+// };
 
-const mapDispatch = (dispatch) => {
-  return {};
-};
+// const mapDispatch = (dispatch) => {
+//   return {};
+// };
 
 export default withRouter(connect(null, null)(ServiceSeeker));
 
-{/*
-  <MapContainer name = { seeker.name} long = { this.props.coords.longitude } lat = { this.props.coords.latitude  }  icon = {seeker.icon} />
-*/}

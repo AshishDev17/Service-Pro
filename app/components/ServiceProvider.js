@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 import socket from '../socket';
-import axios from 'axios';
 import MapContainer from './MapContainer';
-import { Container, Header, Divider, Button, Image, Item} from 'semantic-ui-react';
+import { Header, Divider, Button, Message} from 'semantic-ui-react';
 
 const locations = [
   {
@@ -87,6 +86,12 @@ class ServiceProvider extends Component {
       provider: {},
       seeker: {},
     };
+    this.styles = {
+      message: {
+        width: '1075px',
+        height: '70px',
+      },
+    };
     this.handleRequest = this.handleRequest.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
   }
@@ -126,11 +131,10 @@ class ServiceProvider extends Component {
   }
 
   render () {
+    const styles = this.styles;
     const provider = this.state.provider;
     const seeker = this.state.seeker;
     const locationMarkers = [];
-    console.log(provider);
-    console.log(seeker);
     if ( provider.id && seeker.id ){
       locationMarkers.push({
         name: provider.name,
@@ -154,14 +158,14 @@ class ServiceProvider extends Component {
             {
               seeker.id &&
               <div>
-                <Item>
-                  <Item.Image size='tiny' src='' />
-                  <Item.Content>
-                    <Item.Description>
-                    {'User ' + seeker.name + ' has requested a service'}
-                    </Item.Description>
-                  </Item.Content>
-                </Item>
+                <Message positive style = {styles.message}>
+                  <Message.Header>
+                    Service Request Notification
+                  </Message.Header>
+                  <p>
+                    {seeker.name + ' has requested a service at latitude: ' + seeker.location.coordinates[1] + ' longitude: ' + seeker.location.coordinates[0]}
+                  </p>
+                </Message>
                 <Divider hidden />
                 <Button onClick={this.handleRequest}> Respond To Service Request</Button>
                 <Button onClick={this.handleComplete}> Complete To Service Request</Button>
@@ -180,9 +184,9 @@ class ServiceProvider extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {};
+// const mapState = (state) => {};
 
-const mapDispatch = (dispatch) => {};
+// const mapDispatch = (dispatch) => {};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
