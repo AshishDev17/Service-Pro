@@ -180,8 +180,26 @@ if (module === require.main) {
         })
         .then(() => {
           io.sockets.in(seekerEmail).emit('request-accepted', data.providerDetails);
+        })
+        .catch(err => console.error(err));
+    });
 
-          return null;
+    //socket listening on complete request event
+    socket.on('request-complete', (data) => {
+      const requestId = data.seekerDetails.requestId;
+      const seekerEmail = data.seekerDetails.email;
+      const providerEmail = data.providerDetails.email;
+      const status = 'Completed';
+
+      Request.findById(requestId)
+        .then(request => {
+          return request.update({
+            status: status,
+          });
+        })
+        .then(() => {
+          io.sockets.in(seekerEmail).emit('request-complete', data);
+          io.sockets.in(providerEmail).emit('request-complete', data);
         })
         .catch(err => console.error(err));
     });

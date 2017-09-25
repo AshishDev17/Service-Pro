@@ -87,7 +87,8 @@ class ServiceProvider extends Component {
       provider: {},
       seeker: {},
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleRequest = this.handleRequest.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
   }
 
   componentDidMount(){
@@ -103,10 +104,22 @@ class ServiceProvider extends Component {
       });
       console.log('this state ', this.state);
     });
+    socket.on('request-complete', (data) => {
+      this.setState({
+        seeker: {},
+      });
+    });
   }
 
-  handleClick (e) {
+  handleRequest (e) {
     socket.emit('request-accepted', {
+      providerDetails: this.state.provider,
+      seekerDetails: this.state.seeker,
+    });
+  }
+
+   handleComplete (e) {
+    socket.emit('request-complete', {
       providerDetails: this.state.provider,
       seekerDetails: this.state.seeker,
     });
@@ -150,7 +163,8 @@ class ServiceProvider extends Component {
                   </Item.Content>
                 </Item>
                 <Divider hidden />
-                <Button onClick={this.handleClick}> Respond To Service Request</Button>
+                <Button onClick={this.handleRequest}> Respond To Service Request</Button>
+                <Button onClick={this.handleComplete}> Complete To Service Request</Button>
                 <Divider hidden />
               </div>
             }

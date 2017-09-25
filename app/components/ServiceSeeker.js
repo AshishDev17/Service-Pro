@@ -34,7 +34,14 @@ class Seeker extends Component {
     });
     socket.on('request-accepted', (providerDetails) => {
       this.setState({
-        provider: providerDetails
+        provider: providerDetails,
+        serviceProviders: [providerDetails],
+      });
+    });
+     socket.on('request-complete', (data) => {
+      this.setState({
+        provider: {},
+        serviceProviders: [],
       });
     });
   }
@@ -101,7 +108,7 @@ class Seeker extends Component {
                       <Item>
                         <Item.Image size='tiny' src='' />
                         <Item.Content>
-                          <Item.Description>{'Service provider ' + provider.name + ' has accepted you service request'}</Item.Description>
+                          <Item.Description>{'Service provider ' + provider.name + ' has accepted your service request'}</Item.Description>
                         </Item.Content>
                     </Item>
                     <Divider hidden />
