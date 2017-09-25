@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../../db/models/user');
+const {User, Provider } = require('../../db/models');
 module.exports = router;
 
 // /auth/login
@@ -53,7 +53,16 @@ router.post('/signup', (req, res, next) => {
 });
 
 // /auth/logout
-router.post('/logout', (req, res) => {
+router.post('/logout', (req, res, next) => {
+  // if (req.user.userType === 'Provider'){
+  //   Provider.findOne({
+  //     where: {
+  //       email: req.user.email,
+  //     }
+  //   })
+  //   .then((provider) => provider.destroy())
+  //   .catch(next);
+  // }
   req.logout();
   res.redirect('/');
 });

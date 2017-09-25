@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
-//import UserLocation from './UserLocation';
 
 
 class Home extends Component {
@@ -12,29 +11,13 @@ class Home extends Component {
     this.state ={
 
     };
-    this.styles = {
-      container: {
-        padding: `5em`,
-      }
-    };
   }
 
   render () {
-    const styles = this.styles;
-
     return (
-        <Container style={styles.container} textAlign = "center">
-        </Container>
-    )
+        <Container className="landing-image" fluid />
+    );
   }
 }
-
-// const mapState = (state) => {
-//   return {
-//     user: state.user
-//   };
-// };
-
-//const mapDispatch = (dispatch) => {};
 
 export default withRouter(connect(null, null)(Home));

@@ -48,7 +48,7 @@ export class MapContainer extends Component {
             lat: lat,
             lng: long,
           }}
-          zoom={11}
+          zoom={9}
           onClick={this.onMapClicked}>
           {
             markers.length > 0

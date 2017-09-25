@@ -27,13 +27,16 @@ class Navbar extends Component{
     const { isLoggedIn, handleLogout } = this.props;
     return (
       <Menu floated fixed="top" stackable style={this.styles.navbar}>
+        {
+          !isLoggedIn && <Menu.Item name="Service Pro" as={Link} to={`/`} />
+        }
         {isLoggedIn ? (
-          <Menu.Menu>
-            <Menu.Item position="right" name={`Logout`} onClick={handleLogout} />
+          <Menu.Menu position="right">
+            <Menu.Item name={`Logout`} onClick={handleLogout} />
           </Menu.Menu>
         ) : (
-          <Menu.Menu >
-            <Menu.Item position="right" name="Login" as={Link} to={`/login`} />
+          <Menu.Menu position="right">
+            <Menu.Item name="Login" as={Link} to={`/login`} />
             <Menu.Item name="Sign Up" as={Link} to={`/signup`} />
           </Menu.Menu>
         )}
