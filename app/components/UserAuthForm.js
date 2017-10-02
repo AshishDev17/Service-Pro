@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { auth } from '../store';
+import { auth, getError, clearError } from '../store';
 import { withRouter } from 'react-router-dom';
-import { Container, Card, Form, Message } from 'semantic-ui-react';
+import { Container, Card, Form, Message, Button, Divider } from 'semantic-ui-react';
 
 class UserAuthForm extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class UserAuthForm extends Component {
   }
 
   render() {
-  const {name, displayName, handleSubmit, error} = this.props;
+  const {name, displayName, handleSubmit, handleClear, error} = this.props;
   return (
     <Container style={this.style} fluid>
       <Card centered raised>
@@ -47,11 +47,15 @@ class UserAuthForm extends Component {
               <Form.Button fluid>Submit</Form.Button>
             </Form>
           }
-          {/* error.response && <Message negative> {error.response.data} </Message> */}
+          { error
+            &&
+            <div>
+              <Divider hidden />
+              <Message negative> {error} </Message>
+              <Button onClick={handleClear}>Clear Error</Button>
+            </div>
+          }
         </Card.Content>
-        {/*<Card.Content extra textAlign="center">
-          <a href="/auth/google">{displayName} with Google</a>
-        </Card.Content>*/}
       </Card>
     </Container>
   );
@@ -62,7 +66,7 @@ const mapLogin = (state) => {
   return {
     name: 'login',
     displayName: 'Login',
-    //error: state.user.error,
+    error: state.error,
   };
 };
 
@@ -70,7 +74,7 @@ const mapSignup = (state) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    //error: state.user.error,
+    error: state.error,
   };
 };
 
@@ -99,7 +103,15 @@ const mapDispatch = (dispatch) => {
         };
       }
 
-      dispatch(auth(user, formName));
+      if (user.userType === 'Seeker' || user.userType === 'Provider'){
+        dispatch(auth(user, formName));
+      }
+      else {
+        dispatch(getError('User type can be Seeker or Provider'));
+      }
+    },
+    handleClear() {
+      dispatch(clearError());
     }
   };
 };

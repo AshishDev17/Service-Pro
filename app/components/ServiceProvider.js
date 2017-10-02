@@ -88,7 +88,7 @@ class ServiceProvider extends Component {
     };
     this.styles = {
       message: {
-        width: '1075px',
+        width: '750px',
         height: '70px',
       },
     };

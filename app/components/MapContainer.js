@@ -8,8 +8,8 @@ export class MapContainer extends Component {
     super(props);
     this.state = {};
     this.style = {
-      width: '1075px',
-      height: '500px'
+      width: '750px',
+      height: '250px'
     };
 
     // binding this to event-handler functions
@@ -48,7 +48,7 @@ export class MapContainer extends Component {
             lat: lat,
             lng: long,
           }}
-          zoom={9}
+          zoom={8}
           onClick={this.onMapClicked}>
           {
             markers.length > 0
